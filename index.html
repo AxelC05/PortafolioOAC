@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OAC Portafolio | Organización y Arquitectura de Computadoras</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#adc7f7",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#d7dadc",
+                    "tertiary-fixed-dim": "#c1c7cf",
+                    "surface-bright": "#f7fafc",
+                    "on-tertiary-container": "#989fa6",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-tint": "#455f88",
+                    "tertiary": "#1b2127",
+                    "on-tertiary-fixed-variant": "#41474e",
+                    "on-surface-variant": "#43474e",
+                    "surface-container-high": "#e5e9eb",
+                    "surface-container": "#ebeef0",
+                    "surface-container-highest": "#e0e3e5",
+                    "inverse-surface": "#2d3133",
+                    "secondary-container": "#d5e0f7",
+                    "on-tertiary-fixed": "#161c22",
+                    "outline-variant": "#c4c6cf",
+                    "on-secondary": "#ffffff",
+                    "primary-fixed": "#d6e3ff",
+                    "on-primary": "#ffffff",
+                    "secondary": "#545f72",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "on-secondary-fixed": "#111c2c",
+                    "on-surface": "#181c1e",
+                    "on-error-container": "#93000a",
+                    "background": "#f7fafc",
+                    "surface": "#f7fafc",
+                    "tertiary-container": "#30363c",
+                    "tertiary-fixed": "#dde3eb",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#bcc7dd",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "inverse-on-surface": "#eef1f3",
+                    "inverse-primary": "#adc7f7",
+                    "on-background": "#181c1e",
+                    "primary": "#002045",
+                    "on-secondary-container": "#586377",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#86a0cd",
+                    "secondary-fixed": "#d8e3fa",
+                    "surface-container-low": "#f1f4f6",
+                    "outline": "#74777f",
+                    "on-error": "#ffffff",
+                    "primary-container": "#1a365d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "unit": "8px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "label-md": ["JetBrains Mono"],
+                    "display": ["Hanken Grotesk"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #f7fafc; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .document-card:hover {
+            border-color: #545f72;
+            background-color: rgba(0, 32, 69, 0.02);
+        }
+        .tab-panel.hidden { display: none; }
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            text-align: left;
+            padding: 12px 20px;
+            border-left: 3px solid transparent;
+            color: #43474e;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.15s ease-in-out;
+        }
+        .tab-btn:hover {
+            background-color: rgba(0, 32, 69, 0.04);
+            color: #002045;
+        }
+        .tab-btn.active-tab {
+            border-left-color: #002045;
+            background-color: rgba(0, 32, 69, 0.06);
+            color: #002045;
+            font-weight: 600;
+        }
+        .tab-btn-mobile {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            color: #43474e;
+            font-size: 14px;
+        }
+        .tab-btn-mobile.active-tab {
+            border-bottom-color: #002045;
+            color: #002045;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+
+<script id="site-data">
+    const SITE_DATA = {
+        autores: ["Aisleisy Concepción", "Axel Caballero", "Yuleisy Suira"],
+
+        laboratorios: [
+            { titulo: "Laboratorio 1 - Arquitecturas", descripcion: "Arquitectura RISC", fecha: "abril 1, 2026", pdf: "docs/assignments/labs/Laboratorio 1 OAC - Aisleisy, Axel, Yuleisy.pdf" },
+            { titulo: "Laboratorio 2 - Síntesis de Arquitecturas", descripcion: "Síntesis de los tipos de arquitecturas de acuerdo a su evolución o área encargada", fecha: "abril 1, 2026", pdf: "docs/assignments/labs/Laboratorio 2 OAC - Aisleisy, Axel, Yuleisy.pdf" },
+            { titulo: "Laboratorio 2.1 - Comparación de Arquitecturas Actuales", descripcion: "Análisis de las diferencias entre ESP32 y Raspberry Pi", fecha: "abril 17, 2026", pdf: "docs/assignments/labs/Laboratorio 2.1 OAC - Aisleisy, Axel, Yuleisy.pdf" },
+            { titulo: "Laboratorio 3 - ESP32", descripcion: "Proyectos en el área de Salud y Biomédica con soluciones basadas en ESP32", fecha: "mayo 13, 2026", pdf: "docs/assignments/labs/Laboratorio 3 OAC - Axel, Yuleisy, Aisleisy.pdf" },
+            { titulo: "Laboratorio 4 - Programación de Sensores con ESP32", descripcion: "Sistemas basados en ESP32 que permite la lectura e interpretación de señales provenientes de sensores analógicos y digitales", fecha: "mayo 22, 2026", pdf: "docs/assignments/labs/Laboratorio 4 OAC - Aisleisy, Axel, Yuleisy.pdf" },
+            { titulo: "Laboratorio 5 - Arquitectura para servidores", descripcion: "De al menos 2 fabricantes de servidores se describen dos de sus equipos comerciales", fecha: "junio 15, 2026", pdf: "docs/assignments/labs/Laboratorio 5 OAC - Aisleisy, Axel, Yuleisy.pdf" },
+            { titulo: "Laboratorio 6 - Cómo diseñar y construir un Data Center", descripcion: "Desarrollo de una síntesis del documento propuesto, y desarrollo de cuestionario planteado", fecha: "junio 26, 2026", pdf: "docs/assignments/labs/Laboratorio 6 OAC - Aisleisy, Axel, Yuleisy.pdf" },
+            { titulo: "Laboratorio en clase — Aisleisy", descripcion: "Laboratorio individual realizado en clase donde se presenta el esquemático de nuestros equipos personales(computadoras)", fecha: "abril 10, 2026", pdf: "docs/assignments/labs/Laboratorio en clase - Aisleisy Concepción.pdf" },
+            { titulo: "Laboratorio en clase — Axel", descripcion: "Laboratorio individual realizado en clase donde se presenta el esquemático de nuestros equipos personales(computadoras)", fecha: "abril 10, 2026", pdf: "docs/assignments/labs/Laboratorio en clase - Axel E. Caballero.pdf" },
+            { titulo: "Laboratorio en clase — Yuleisy", descripcion: "Laboratorio individual realizado en clase donde se presenta el esquemático de nuestros equipos personales(computadoras)", fecha: "abril 10, 2026", pdf: "docs/assignments/labs/Laboratorio en clase - Yuleisy Suira.pdf" }
+        ],
+
+        parciales: [
+            { titulo: "Parcial 1 — Aisleisy", descripcion: "Resolución del primer parcial", puntaje: "49", pdf: "docs/assignments/midterms/Parcial 1 - Aisleisy Concepción.pdf" },
+            { titulo: "Parcial 1 — Axel", descripcion: "Resolución del primer parcial", puntaje: "41.5", pdf: "docs/assignments/midterms/Parcial 1 - Axel Caballero.pdf" },
+            { titulo: "Parcial 1 — Yuleisy", descripcion: "Resolución del primer parcial", puntaje: "33.5", pdf: "docs/assignments/midterms/Parcial 1 - Yuleisy Suira.pdf" },
+            { titulo: "Parcial 2 — Aisleisy", descripcion: "Resolución del segundo parcial", puntaje: "48", pdf: "docs/assignments/midterms/Parcial 2  - Aisleisy Concepción.pdf" },
+            { titulo: "Parcial 2 — Axel", descripcion: "Resolución del segundo parcial", puntaje: "43", pdf: "docs/assignments/midterms/Parcial 2 - Axel Caballero.pdf" },
+            { titulo: "Parcial 2 — Yuleisy", descripcion: "Resolución del segundo parcial", puntaje: "41.5", pdf: "docs/assignments/midterms/Parcial 2 - Yuleisy Suira.pdf" }
+        ],
+
+        noticias: [
+            { titulo: "Noticia 1 — Aisleisy", descripcion: "Intel anuncia los nuevos procesadores de escritorio Intel Core Ultra 200S Plus", pdf: "docs/assignments/news/Noticia 1 OAC - Aisleisy Concepción.pdf" },
+            { titulo: "Noticia 1 — Axel", descripcion: "Una startup coreana promete un chip de IA 6 veces más eficiente que el de NVIDIA: Samsung y ARM se alían con él", pdf: "docs/assignments/news/Noticia 1 OAC - Axel E. Caballero.pdf" },
+            { titulo: "Noticia 1 — Yuleisy", descripcion: "ARM rompe con su rol tradicional y anuncia el lanzamiento de su primer procesador", pdf: "docs/assignments/news/Noticia 1 OAC - Yuleisy Suira.pdf" },
+            { titulo: "Noticia 2 — Aisleisy", descripcion: "Tigo proyecta nuevo data center en Panamá", pdf: "docs/assignments/news/Noticia 2 OAC - Aisleisy Concepción.pdf" },
+            { titulo: "Noticia 2 — Axel", descripcion: "Panamá emerge como hub de datacenters e inteligencia artificial", pdf: "docs/assignments/news/Noticia 2 OAC - Axel E. Caballero.pdf" },
+            { titulo: "Noticia 2 — Yuleisy", descripcion: "IA dispara demanda energética de los datacenters y obliga a rediseñar su infraestructura", pdf: "docs/assignments/news/Noticia 2 OAC - Yuleisy Suira.pdf" }
+        ],
+
+        proyectos: [
+            { titulo: "Proyecto 1 OAC", descripcion: "Instalación, integración y validación de componentes de hardware en sistemas de cómputo", boton: "Ver PDF", link: "docs/assignments/projects/Proyecto 1 OAC - Aisleisy, Axel, Yuleisy.pdf" }
+        ],
+
+        proyectoFinal: {
+            articulo: { descripcion: "Artículo científico presentado en la Jornada de Iniciación Científica (JIC), Proyecto 1443", pdf: "docs/assignments/projects/Artículo JIC - Proyecto 1443.pdf" },
+            poster: { descripcion: "Póster de resumen presentado en la Jornada de Iniciación Científica (JIC), Proyecto 1443", pdf: "docs/assignments/projects/Poster JIC - Proyecto 1443.pdf" }
+        },
+
+        syllabus: "docs/course_content/OAC 2026 2IL141.pdf",
+
+        contenidoCurso: [
+            { titulo: "Programa del Curso", descripcion: "Descripción y contenido de la asignatura", pdf: "docs/course_content/OAC 2026 2IL141.pdf" }
+        ],
+
+        materiales: [
+            {
+                modulo: "Módulo 1 — Introducción a la Arquitectura de Computadores",
+                items: [
+                    { titulo: "Componentes generales del computador", descripcion: "Introducción a la arquitectura de computadoras", pdf: "docs/materials/module1/modulo 1 Introduccion Arquitectura de computadores.pdf" },
+                    { titulo: "Introducción al Hardware de computadora personal", descripcion: "Introducción a los componentes fundamentales del hardware", pdf: "docs/materials/module1/Mod1_Componentes.pdf" },
+                    { titulo: "Hardware (especificaciones técnicas)", descripcion: "Especificaciones técnicas de los componentes de hardware", pdf: "docs/materials/module1/Presentacion_Componentes actuales D.pdf" },
+                    { titulo: "Folleto Organización y Arquitectura de Computadoras", descripcion: "Folleto resumen del módulo 1", pdf: "docs/materials/module1/Folleto Organización y Arquitectura de Computadoras-cap1.pdf" }
+                ]
+            },
+            {
+                modulo: "Módulo 2 — Interfaces, Memoria y ESP32",
+                items: [
+                    { titulo: "Interfaz de Bus y Memoria", descripcion: "Contenido sobre las interfaces de bus y memoria", pdf: "docs/materials/module2/Interfaz de bus y memoria.pdf" },
+                    { titulo: "Introducción al ESP32", descripcion: "Descripción y especificaciones del ESP32", pdf: "docs/materials/module2/Intro_Esp32.pdf" }
+                ]
+            },
+            {
+                modulo: "Módulo 3 — Arquitectura para Servidores",
+                items: [
+                    { titulo: "Arquitectura para Servidores", descripcion: "Contenido sobre las arquitecturas para servidores", pdf: "docs/materials/module3/Arquitectura para servidores.pdf" }
+                ]
+            }
+        ]
+    };
+</script>
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-surface border-b border-outline-variant transition-all duration-200 ease-in-out">
+<div class="flex items-center justify-between h-16 w-full px-6 md:px-10">
+
+    <!-- Título -->
+    <div class="flex-1 max-w-lg font-headline-md text-headline-md font-bold text-primary leading-tight">
+        Organización y Arquitectura de Computadoras
+    </div>
+
+    <!-- Menú (se adapta según la pestaña activa) -->
+    <div class="hidden md:flex gap-gutter font-body-md text-body-md flex-shrink-0 mx-8">
+        <div class="nav-links hidden gap-gutter" data-navfor="asignaciones">
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#laboratorios">Laboratorios</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#parciales">Parciales</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#noticias">Noticias</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#proyectos">Proyectos</a>
+        </div>
+        <div class="nav-links flex gap-gutter" data-navfor="curso">
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#presentacion">Presentación</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#programa">Programa</a>
+        </div>
+        <div class="nav-links hidden gap-gutter" data-navfor="materiales">
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#modulo1">Módulo 1</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#modulo2">Módulo 2</a>
+            <a class="nav-link text-on-surface-variant hover:text-primary transition-colors" href="#modulo3">Módulo 3</a>
+        </div>
+    </div>
+
+    <!-- Integrantes -->
+    <div class="text-primary font-body-md text-body-md flex-shrink-0 whitespace-nowrap">
+        Aisleisy, Axel, Yuleisy
+    </div>
+
+</div>
+</nav>
+<div class="pt-16 md:flex">
+
+<!-- Sidebar de pestañas (desktop) -->
+<aside class="hidden md:flex md:flex-col md:w-60 md:fixed md:top-16 md:left-0 md:h-[calc(100vh-4rem)] border-r border-outline-variant bg-surface-container-lowest py-8 gap-1 z-40 overflow-y-auto">
+<button class="tab-btn active-tab" data-tab="curso" onclick="switchTab('curso')">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+Contenido del Curso
+</button>
+<button class="tab-btn" data-tab="asignaciones" onclick="switchTab('asignaciones')">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+Asignaciones
+</button>
+<button class="tab-btn" data-tab="materiales" onclick="switchTab('materiales')">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+Materiales
+</button>
+</aside>
+
+<!-- Barra de pestañas (mobile) -->
+<div class="md:hidden fixed top-16 left-0 w-full z-40 bg-surface border-b border-outline-variant flex overflow-x-auto">
+<button class="tab-btn-mobile active-tab" data-tab="curso" onclick="switchTab('curso')">
+<span class="material-symbols-outlined text-lg" data-icon="menu_book">menu_book</span> Contenido del Curso
+</button>
+<button class="tab-btn-mobile" data-tab="asignaciones" onclick="switchTab('asignaciones')">
+<span class="material-symbols-outlined text-lg" data-icon="assignment">assignment</span> Asignaciones
+</button>
+<button class="tab-btn-mobile" data-tab="materiales" onclick="switchTab('materiales')">
+<span class="material-symbols-outlined text-lg" data-icon="folder_open">folder_open</span> Materiales
+</button>
+</div>
+
+<div class="md:pl-60 w-full">
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-14 md:pt-0">
+
+<!-- ===================== PANEL: ASIGNACIONES ===================== -->
+<div id="panel-asignaciones" class="tab-panel hidden">
+
+<!-- Laboratorios Section -->
+<section class="py-20 pt-16 md:pt-20" id="laboratorios">
+<div class="flex items-baseline gap-4 mb-12">
+<div class="w-1 h-8 bg-primary"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Laboratorios</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(10 Documentos)</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter" id="laboratorios-container"></div>
+<script>
+    document.getElementById('laboratorios-container').innerHTML = SITE_DATA.laboratorios.map(lab => `
+        <a href="${lab.pdf ? encodeURI(lab.pdf) : '#'}" target="_blank" rel="noopener" class="document-card group bg-surface-container-lowest border border-outline-variant p-gutter flex flex-col gap-4 transition-all cursor-pointer ${lab.pdf ? '' : 'pointer-events-none opacity-60'}">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-primary text-4xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+                <span class="font-label-sm text-label-sm text-outline">PDF</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${lab.titulo}</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">${lab.descripcion}</p>
+            </div>
+            <div class="mt-auto pt-4 border-t border-outline-variant flex justify-between items-center">
+                <span class="font-label-sm text-label-sm">${lab.fecha}</span>
+                <span class="text-primary font-label-md text-label-md flex items-center gap-1">Ver <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span></span>
+            </div>
+        </a>
+    `).join('');
+</script>
+</section>
+<!-- Parciales Section -->
+<section class="py-20 border-t border-outline-variant" id="parciales">
+<div class="flex items-baseline gap-4 mb-12">
+<div class="w-1 h-8 bg-primary"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Parciales</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(6 Exámenes)</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter" id="parciales-container"></div>
+<script>
+    document.getElementById('parciales-container').innerHTML = SITE_DATA.parciales.map(p => `
+        <a href="${p.pdf ? encodeURI(p.pdf) : '#'}" target="_blank" rel="noopener" class="document-card bg-surface-container-lowest border border-outline-variant p-gutter flex flex-col gap-4 transition-all cursor-pointer ${p.pdf ? '' : 'pointer-events-none opacity-60'}">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-secondary text-4xl" data-icon="quiz">quiz</span>
+                <span class="font-label-sm text-label-sm text-outline">Evaluación</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${p.titulo}</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">${p.descripcion}</p>
+            </div>
+            <div class="mt-auto pt-4 flex justify-between items-center text-outline">
+                <span class="font-label-sm text-label-sm italic">Puntaje: ${p.puntaje}</span>
+            </div>
+        </a>
+    `).join('');
+</script>
+</section>
+<!-- Noticias Section -->
+<section class="py-20 border-t border-outline-variant" id="noticias">
+<div class="flex items-baseline gap-4 mb-12">
+<div class="w-1 h-8 bg-primary"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Noticias</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Actualidad Tecnológica</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter" id="noticias-container"></div>
+<script>
+    document.getElementById('noticias-container').innerHTML = SITE_DATA.noticias.map(n => `
+        <a href="${n.pdf ? encodeURI(n.pdf) : '#'}" target="_blank" rel="noopener" class="document-card bg-surface-container-lowest border border-outline-variant p-gutter flex flex-col gap-4 transition-all cursor-pointer ${n.pdf ? '' : 'pointer-events-none opacity-60'}">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-primary text-4xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+                <span class="font-label-sm text-label-sm text-outline">PDF</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${n.titulo}</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">${n.descripcion}</p>
+            </div>
+        </a>
+    `).join('');
+</script>
+</section>
+<!-- Proyectos Section -->
+<section class="py-20 border-t border-outline-variant" id="proyectos">
+<div class="flex items-baseline gap-4 mb-12">
+<div class="w-1 h-8 bg-primary"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Proyectos</h2>
+</div>
+<div class="grid grid-cols-1 gap-gutter" id="proyectos-container"></div>
+<script>
+    document.getElementById('proyectos-container').innerHTML = SITE_DATA.proyectos.map(proy => `
+        <a href="${proy.link ? encodeURI(proy.link) : '#'}" target="_blank" rel="noopener" class="document-card group bg-surface-container-lowest border border-outline-variant p-gutter flex flex-col gap-4 transition-all cursor-pointer ${proy.link ? '' : 'pointer-events-none opacity-60'}">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-primary text-4xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+                <span class="font-label-sm text-label-sm text-outline">PDF</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${proy.titulo}</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">${proy.descripcion}</p>
+            </div>
+            <div class="mt-auto pt-4 border-t border-outline-variant flex justify-end items-center">
+                <span class="text-primary font-label-md text-label-md flex items-center gap-1">Ver <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span></span>
+            </div>
+        </a>
+    `).join('');
+</script>
+</section>
+<!-- Proyecto Final Section -->
+<section class="py-20 border-t-4 border-primary bg-surface-container-lowest mb-20 px-gutter" id="final">
+<div class="max-w-4xl mx-auto">
+<div class="text-center mb-12">
+<h2 class="font-display text-headline-lg text-primary mb-2">Proyecto Final</h2>
+<p class="font-body-lg text-body-lg text-secondary">Desarrollo de un sistema IoT para el Monitoreo de Pacientes en Entornos Médicos</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Articulo Cientifico -->
+<div class="group border border-outline-variant p-gutter hover:border-primary transition-all flex flex-col items-center text-center gap-4 bg-white">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="description">description</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Artículo Científico</h3>
+<p class="font-body-md text-body-md text-on-surface-variant" id="articulo-descripcion"></p>
+<a class="mt-4 text-primary font-bold hover:underline flex items-center gap-2" id="articulo-link" href="#" target="_blank" rel="noopener">
+                            Descargar Artículo <span class="material-symbols-outlined" data-icon="download">download</span>
+</a>
+</div>
+<!-- Poster de Resumen -->
+<div class="group border border-outline-variant p-gutter hover:border-primary transition-all flex flex-col items-center text-center gap-4 bg-white">
+<div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="gallery_thumbnail">gallery_thumbnail</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Póster Científico</h3>
+<p class="font-body-md text-body-md text-on-surface-variant" id="poster-descripcion"></p>
+<a class="mt-4 text-primary font-bold hover:underline flex items-center gap-2" id="poster-link" href="#" target="_blank" rel="noopener">
+                            Ver Póster <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</a>
+</div>
+</div>
+<script>
+    document.getElementById('articulo-descripcion').textContent = SITE_DATA.proyectoFinal.articulo.descripcion;
+    document.getElementById('articulo-link').href = SITE_DATA.proyectoFinal.articulo.pdf ? encodeURI(SITE_DATA.proyectoFinal.articulo.pdf) : '#';
+    document.getElementById('poster-descripcion').textContent = SITE_DATA.proyectoFinal.poster.descripcion;
+    document.getElementById('poster-link').href = SITE_DATA.proyectoFinal.poster.pdf ? encodeURI(SITE_DATA.proyectoFinal.poster.pdf) : '#';
+</script>
+</div>
+</section>
+</div> <!-- /panel-asignaciones -->
+
+<!-- ===================== PANEL: CONTENIDO DEL CURSO ===================== -->
+<div id="panel-curso" class="tab-panel">
+
+<!-- Presentación -->
+<header class="py-16 md:py-24 flex flex-col items-center text-center border-b border-outline-variant mb-4" id="presentacion">
+<div class="w-16 h-1 bg-primary mb-unit*4"></div>
+<h1 class="font-display text-display text-primary max-w-3xl mb-unit*4">Organización y Arquitectura de Computadoras</h1>
+<p class="font-headline-md text-headline-md text-secondary">Prof. Yarisol Castillo</p>
+<!-- Authors Section -->
+<div class="mt-12 flex flex-wrap justify-center gap-gutter text-on-surface-variant" id="autores-container"></div>
+<script>
+    document.getElementById('autores-container').innerHTML = SITE_DATA.autores.map(nombre => `
+        <div class="flex items-center gap-2 font-label-md text-label-md">
+            <span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+            ${nombre}
+        </div>
+    `).join('');
+</script>
+</header>
+<section class="py-20" id="programa">
+<div class="flex items-baseline gap-4 mb-12">
+<div class="w-1 h-8 bg-primary"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Contenido del Curso</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="contenido-curso-count"></span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter" id="contenido-curso-container"></div>
+<script>
+    document.getElementById('contenido-curso-count').textContent = `(${SITE_DATA.contenidoCurso.length} Documento${SITE_DATA.contenidoCurso.length === 1 ? '' : 's'})`;
+    document.getElementById('contenido-curso-container').innerHTML = SITE_DATA.contenidoCurso.map(doc => `
+        <a href="${doc.pdf ? encodeURI(doc.pdf) : '#'}" target="_blank" rel="noopener" class="document-card group bg-surface-container-lowest border border-outline-variant p-gutter flex flex-col gap-4 transition-all cursor-pointer ${doc.pdf ? '' : 'pointer-events-none opacity-60'}">
+            <div class="flex justify-between items-start">
+                <span class="material-symbols-outlined text-primary text-4xl" data-icon="menu_book">menu_book</span>
+                <span class="font-label-sm text-label-sm text-outline">PDF</span>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${doc.titulo}</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant">${doc.descripcion}</p>
+            </div>
+            <div class="mt-auto pt-4 border-t border-outline-variant flex justify-end items-center">
+                <span class="text-primary font-label-md text-label-md flex items-center gap-1">Ver <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span></span>
+            </div>
+        </a>
+    `).join('');
+</script>
+</section>
+</div> <!-- /panel-curso -->
+
+<!-- ===================== PANEL: MATERIALES ===================== -->
+<div id="panel-materiales" class="tab-panel hidden">
+<section class="py-20" id="materiales">
+<div class="flex items-baseline gap-4 mb-12">
+<div class="w-1 h-8 bg-primary"></div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Materiales</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="materiales-count"></span>
+</div>
+<div id="materiales-container" class="flex flex-col gap-16"></div>
+<script>
+    const totalMateriales = SITE_DATA.materiales.reduce((acc, mod) => acc + mod.items.length, 0);
+    document.getElementById('materiales-count').textContent = `(${totalMateriales} Documentos en ${SITE_DATA.materiales.length} módulos)`;
+    document.getElementById('materiales-container').innerHTML = SITE_DATA.materiales.map((mod, idx) => `
+        <div id="modulo${idx + 1}">
+            <h3 class="font-headline-md text-headline-md text-secondary mb-6 pb-2 border-b border-outline-variant">${mod.modulo}</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                ${mod.items.map(item => `
+                    <a href="${item.pdf ? encodeURI(item.pdf) : '#'}" target="_blank" rel="noopener" class="document-card group bg-surface-container-lowest border border-outline-variant p-gutter flex flex-col gap-4 transition-all cursor-pointer ${item.pdf ? '' : 'pointer-events-none opacity-60'}">
+                        <div class="flex justify-between items-start">
+                            <span class="material-symbols-outlined text-primary text-4xl" data-icon="picture_as_pdf">picture_as_pdf</span>
+                            <span class="font-label-sm text-label-sm text-outline">PDF</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline-md text-headline-md text-on-surface mb-2">${item.titulo}</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant">${item.descripcion}</p>
+                        </div>
+                        <div class="mt-auto pt-4 border-t border-outline-variant flex justify-end items-center">
+                            <span class="text-primary font-label-md text-label-md flex items-center gap-1">Ver <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span></span>
+                        </div>
+                    </a>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+</script>
+</section>
+</div> <!-- /panel-materiales -->
+
+</main>
+</div> <!-- /md:pl-60 wrapper -->
+</div> <!-- /md:flex wrapper -->
+<!-- Footer -->
+<footer class="relative z-50 w-full py-unit*10 px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 bg-surface-container-low border-t border-outline-variant">
+<div class="flex flex-col items-center md:items-start">
+<div class="font-headline-sm text-headline-sm font-semibold text-primary">Portafolio de Organización y Arquitectura de Computadoras</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-80 mt-1">© 2026 Organización y Arquitectura de Computadoras - Portafolio Académico</p>
+</div>
+<div class="flex gap-gutter font-label-sm text-label-sm text-secondary">
+<a class="hover:text-primary transition-colors" href="#">Autores</a>
+<a class="hover:text-primary transition-colors" href="#" id="syllabus-link" target="_blank" rel="noopener">Portafolio del Curso</a>
+<a class="hover:text-primary transition-colors" href="#">Universidad Tecnológica de Panamá</a>
+</div>
+</footer>
+<script>
+        document.getElementById('syllabus-link').href = encodeURI(SITE_DATA.syllabus);
+</script>
+<script>
+        // Micro-interaction for active nav link (solo aplica dentro del panel Asignaciones)
+        window.addEventListener('scroll', () => {
+            if (currentTab !== 'asignaciones') return;
+
+            const sections = ['laboratorios', 'parciales', 'noticias', 'proyectos', 'final'];
+            let current = '';
+
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    if (rect.top <= 100) {
+                        current = section;
+                    }
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+                a.classList.add('text-on-surface-variant');
+                if (a.getAttribute('href').includes(current)) {
+                    a.classList.remove('text-on-surface-variant');
+                    a.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+                }
+            });
+        });
+    </script>
+<!-- Sistema de pestañas: Asignaciones / Contenido del Curso / Materiales -->
+<script>
+    // Secciones asociadas a cada pestaña, usadas por el scroll-spy
+    const sectionsByTab = {
+        asignaciones: ['laboratorios', 'parciales', 'noticias', 'proyectos', 'final'],
+        curso: ['presentacion', 'programa'],
+        materiales: ['modulo1', 'modulo2', 'modulo3']
+    };
+
+    let currentTab = 'curso';
+
+    function switchTab(tab) {
+        currentTab = tab;
+
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+        const panel = document.getElementById('panel-' + tab);
+        if (panel) panel.classList.remove('hidden');
+
+        document.querySelectorAll('.tab-btn, .tab-btn-mobile').forEach(b => {
+            b.classList.toggle('active-tab', b.getAttribute('data-tab') === tab);
+        });
+
+        // Mostrar solo el grupo de enlaces del menu superior que corresponde a la pestaña activa
+        document.querySelectorAll('.nav-links').forEach(g => {
+            const match = g.getAttribute('data-navfor') === tab;
+            g.classList.toggle('hidden', !match);
+            g.classList.toggle('flex', match);
+        });
+
+        window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+        history.replaceState(null, '', '#' + tab);
+    }
+
+    // Micro-interaction: resalta el enlace del menu superior segun la seccion visible,
+    // solo dentro del grupo de enlaces correspondiente a la pestaña activa.
+    window.addEventListener('scroll', () => {
+        const sections = sectionsByTab[currentTab] || [];
+        let current = '';
+
+        sections.forEach(section => {
+            const element = document.getElementById(section);
+            if (element) {
+                const rect = element.getBoundingClientRect();
+                if (rect.top <= 100) {
+                    current = section;
+                }
+            }
+        });
+
+        document.querySelectorAll('.nav-links[data-navfor="' + currentTab + '"] a').forEach(a => {
+            a.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+            a.classList.add('text-on-surface-variant');
+            if (current && a.getAttribute('href').includes(current)) {
+                a.classList.remove('text-on-surface-variant');
+                a.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+            }
+        });
+    });
+
+    // Al cargar la pagina, respeta el hash si apunta a una pestaña valida
+    // (por defecto la pestaña inicial es "Contenido del Curso")
+    window.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'asignaciones' || hash === 'materiales') {
+            switchTab(hash);
+        }
+    });
+</script>
+</body></html>
